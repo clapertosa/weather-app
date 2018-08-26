@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import keys from "../../config/keys";
+import keys from "../../../config/keys";
 import axios from "axios";
 
 export const initForecasts = () => {
