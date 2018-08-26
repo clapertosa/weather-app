@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
+  mode: "production",
   devtool: "cheap-module-source-map",
   entry: "./src/index.js",
   output: {
