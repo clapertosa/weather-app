@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "A simple React app about weather with animated SVG",
   "main": "index.js",
+  "engines": {
+    "npm": "6.4.0",
+    "node": "8.11.4"
+  },
   "scripts": {
     "start": "webpack-dev-server",
     "build": "rimraf dist && webpack --config webpack.prod.js --progress --profile --color",
+    "heroku-postbuild": "npm run build",
     "test": "jest --watch"
   },
   "author": "Claudio Lapertosa",
