@@ -1,0 +1,15 @@
+.weather-main-container {
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.weather-forecasts-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+}

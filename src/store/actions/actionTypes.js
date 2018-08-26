@@ -1,0 +1,6 @@
+export const INIT_FORECASTS = "INIT_FORECASTS";
+export const GET_FORECASTS = "GET_FORECASTS";
+export const FORECASTS_SUCCESS = "FORECASTS_SUCCESS";
+export const FORECASTS_FAILED = "FETCH_FORECASTS_FAILED";
+export const SET_CITY = "SET_CITY";
+export const SET_QUERY = "SET_QUERY";
