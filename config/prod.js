@@ -1,3 +1,3 @@
 module.exports = {
-  apiKey: process.env.API_KEY
+  apiKey: process.env.OWM_API_KEY
 };
