@@ -1,15 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import * as actions from "../../store/actions";
+import styles from "./Weather.scss";
 import WeatherMain from "./WeatherMain/WeatherMain";
 import WeatherForecast from "./WeatherForecast/WeatherForecast";
-import styles from "./Weather.scss";
 import { getWeatherImage } from "../../shared/weatherImage";
 import NoWeather from "./NoWeather/NoWeather";
 import Spinner from "../Spinner/Spinner";
 
 class Weather extends Component {
+  componentDidMount() {
+    navigator.geolocation
+      ? navigator.geolocation.getCurrentPosition(position => {
+          this.props.getForecastsFromCoords(
+            position.coords.latitude.toString(),
+            position.coords.longitude.toString()
+          );
+        })
+      : null;
+  }
+
   renderWeather() {
-    if (!this.props.city) {
+    if (!this.props.city && !this.props.coords) {
       return <NoWeather />;
     } else if (this.props.loading) {
       return <Spinner />;
@@ -53,11 +65,19 @@ const mapStateToProps = state => {
     error: state.weather.error,
     weather: state.weather.forecasts,
     loading: state.weather.loading,
+    coords: state.weather.lat && state.weather.lon,
     city: state.searchbar.searchedCity
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getForecastsFromCoords: (latitude, longitude) =>
+      dispatch(actions.getForecastsFromCoords(latitude, longitude))
   };
 };
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Weather);

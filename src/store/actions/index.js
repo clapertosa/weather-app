@@ -1,2 +1,2 @@
 export { setQuery } from "./searchbar";
-export { getForecasts } from "./weather";
+export { getForecasts, getForecastsFromCoords, resetCity } from "./weather";

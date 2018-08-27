@@ -44,6 +44,8 @@ const initialState = {
       weatherID: undefined
     }
   },
+  lat: "",
+  lon: "",
   loading: false,
   error: null
 };
@@ -55,12 +57,29 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: true,
         error: null,
-        forecasts: { main: {}, day1: {}, day2: {}, day3: {} }
+        forecasts: { main: {}, day1: {}, day2: {}, day3: {} },
+        lat: "",
+        lon: ""
       };
     case actionTypes.GET_FORECASTS:
       return { ...state, loading: true, error: false };
     case actionTypes.FORECASTS_FAILED:
-      return { ...state, loading: false, error: action.payload };
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        lat: "",
+        lon: ""
+      };
+    case actionTypes.RESET_CITY:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        lat: "",
+        lon: "",
+        forecasts: { main: {}, day1: {}, day2: {}, day3: {} }
+      };
     case actionTypes.FORECASTS_SUCCESS:
       const data = action.payload;
       return {
@@ -109,7 +128,9 @@ const reducer = (state = initialState, action) => {
             weatherDescription: data.list[3].weather[0].description,
             weatherID: data.list[3].weather[0].id
           }
-        }
+        },
+        lat: data.city.coord.lat,
+        lon: data.city.coord.lon
       };
     default:
       return state;

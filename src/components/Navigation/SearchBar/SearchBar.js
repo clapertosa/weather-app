@@ -7,7 +7,7 @@ import styles from "./SearchBar.scss";
 class SearchBar extends Component {
   onInputChange = debounce(query => {
     this.props.inputChange(query);
-    query.length > 0 ? this.props.getForecasts(query) : null;
+    query.length > 0 ? this.props.getForecasts(query) : this.props.resetCity();
   }, 1500);
 
   render() {
@@ -29,7 +29,8 @@ class SearchBar extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     inputChange: input => dispatch(actions.setQuery(input)),
-    getForecasts: city => dispatch(actions.getForecasts(city))
+    getForecasts: city => dispatch(actions.getForecasts(city)),
+    resetCity: () => dispatch(actions.resetCity())
   };
 };
 
