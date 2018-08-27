@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const path = require("path");
 const autoprefixer = require("autoprefixer");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -86,6 +87,11 @@ module.exports = {
       template: __dirname + "/src/index.html",
       filename: "index.html",
       inject: "body"
+    }),
+    new webpack.DefinePlugin({
+      "process.env": {
+        OWM_API_KEY: JSON.stringify(process.env.OWM_API_KEY)
+      }
     })
   ],
   optimization: {
