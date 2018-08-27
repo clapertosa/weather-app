@@ -22,6 +22,26 @@ export const getForecasts = city => {
   };
 };
 
+export const getForecastsFromCoords = (latitude, longitude) => {
+  return dispatch => {
+    dispatch(initForecasts());
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${
+          keys.apiKey
+        }`
+      )
+      .then(data => dispatch(setForecasts(data.data)))
+      .catch(error => dispatch(forecastsFailed(error.response.data.message)));
+  };
+};
+
+export const resetCity = () => {
+  return {
+    type: actionTypes.RESET_CITY
+  };
+};
+
 const setForecasts = data => {
   return {
     type: actionTypes.FORECASTS_SUCCESS,
