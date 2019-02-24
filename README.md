@@ -6,7 +6,7 @@
 
 ## Demo
 
-> Live preview on Heroku: [demo](https://glacial-plains-67316.herokuapp.com/).
+> Live preview on Heroku: [demo](https://weatherapp-webapp.herokuapp.com/).
 
 ## Credits
 
