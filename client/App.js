@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "./hoc/Layout";
-import Weather from "./Containers/Weather";
+import Weather from "./containers/Weather";
 
 const App = () => {
   return (
