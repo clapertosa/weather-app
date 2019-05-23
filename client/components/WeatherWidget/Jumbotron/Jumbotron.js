@@ -27,6 +27,12 @@ const Container = styled.div`
 const City = styled.div`
   grid-area: city;
   font-size: 2rem;
+  font-weight: bold;
+
+  @media (min-width: ${({ theme: { mediaQueryMinWidth } }) =>
+      mediaQueryMinWidth}) {
+    font-size: 3rem;
+  }
 `;
 
 const CitySuffix = styled.div`
@@ -43,6 +49,7 @@ const CitySuffix = styled.div`
   span {
     font-size: 1.2rem;
     margin: 5px 0;
+    text-align: right;
   }
 `;
 
