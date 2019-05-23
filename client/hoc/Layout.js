@@ -2,21 +2,13 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 
 const theme = {
-  mediaQueryMinWidth: "40rem"
+  mediaQueryMinWidth: "60rem",
+  colors: { darkGray: "#1e202c", lightBlue: "#009ad8" }
 };
 
 const Container = styled.div`
-  display: grid;
-  grid-template-areas: "searchbar" "weather";
-  grid-template-rows: auto 1fr;
   margin: auto;
   height: 100%;
-  width: 95%;
-
-  @media (min-width: ${({ theme: { mediaQueryMinWidth } }) =>
-      mediaQueryMinWidth}) {
-    width: 80%;
-  }
 `;
 
 const Layout = ({ children }) => {
