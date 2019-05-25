@@ -10,7 +10,7 @@ export const searchLocations = city => {
     dispatch(searchLocationsInit());
     let res;
     try {
-      res = await axios.post("/api/locations", { city });
+      res = await axios.post("/api/locations/name", { city });
       dispatch(searchLocationsSuccess(res.data));
     } catch (e) {
       dispatch(searchLocationsFail(e.response));

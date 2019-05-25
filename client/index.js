@@ -5,11 +5,18 @@ import "./styles.css";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import { locationsReducer, forecastsReducer } from "./store/reducers";
+import {
+  locationsReducer,
+  currentLocationReducer,
+  forecastsReducer,
+  pictureReducer
+} from "./store/reducers";
 
 const rootReducer = combineReducers({
   locations: locationsReducer,
-  forecasts: forecastsReducer
+  currentLocation: currentLocationReducer,
+  forecasts: forecastsReducer,
+  picture: pictureReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
