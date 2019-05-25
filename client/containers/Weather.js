@@ -28,8 +28,6 @@ const Weather = ({
   forecasts,
   getForecasts
 }) => {
-  const [savedLocation, setSavedLocation] = useState(false);
-
   const getInitialData = async () => {
     const latitude = localStorage.latitude || 37.7291734;
     const longitude = localStorage.longitude || -123.0466412;
@@ -40,18 +38,16 @@ const Weather = ({
   };
 
   useEffect(() => {
-    if (navigator.geolocation && !savedLocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        localStorage.setItem("latitude", position.coords.latitude);
-        localStorage.setItem("longitude", position.coords.longitude);
-        setSavedLocation(true);
-        getInitialData();
-      });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          localStorage.setItem("latitude", position.coords.latitude);
+          localStorage.setItem("longitude", position.coords.longitude);
+          getInitialData();
+        },
+        () => getInitialData()
+      );
     }
-  }, [savedLocation]);
-
-  useEffect(() => {
-    getInitialData();
   }, []);
 
   const setLocation = async (latitude, longitude, name, suffix) => {
