@@ -12,8 +12,8 @@ const Container = styled(animated.div)`
   z-index: -10;
 
   img {
-    width: 100%;
-    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     object-fit: cover;
     filter: blur(20px);
     transform: scale(1.1);
