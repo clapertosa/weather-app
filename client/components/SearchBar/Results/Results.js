@@ -73,6 +73,11 @@ const Results = ({ setLocation, show, results }) => {
                     {result.display_name}
                   </ListItem>
                 ))}
+              {results.length <= 0 && show && (
+                <ListItem style={{ textAlign: "center" }}>
+                  Location not found 😵
+                </ListItem>
+              )}
             </List>
           </Container>
         ))
