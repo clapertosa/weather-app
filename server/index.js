@@ -7,6 +7,7 @@ const helmet = require("helmet");
 // Routes
 const locationsRoute = require("./routes/locations");
 const forecastsRoute = require("./routes/forecasts");
+const pictureRoute = require("./routes/picture");
 
 // Default port
 const PORT = process.env.PORT || 3000;
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static file
 app.use(express.static(path.join(__dirname, "../dist")));
+app.use(express.static(path.join(__dirname, "../client/public")));
 
 // Route config
 app.get("*", (req, res) => {
@@ -31,5 +33,6 @@ app.get("*", (req, res) => {
 
 app.use("/api/locations", locationsRoute);
 app.use("/api/forecasts", forecastsRoute);
+app.use("/api/picture", pictureRoute);
 
 app.listen(PORT, () => console.log("Server started"));
