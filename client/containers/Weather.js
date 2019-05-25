@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Spring } from "react-spring/renderprops";
 import { connect } from "react-redux";
+import {
+  setCurrentLocation,
+  getCurrentLocation
+} from "../store/actions/currentLocation";
 import { getForecasts } from "../store/actions/forecasts";
+import { getPicture } from "../store/actions/picture";
 import Background from "../components/Background/Background";
 import SearchBar from "../components/SearchBar/SearchBar";
 import WeatherWidget from "../components/WeatherWidget/WeatherWidget";
@@ -15,49 +19,79 @@ const Container = styled.div`
   grid-template-columns: 1fr;
 `;
 
-const Weather = ({ forecasts, getForecasts }) => {
-  const [currentLocation, setCurrentLocation] = useState({
-    name: "San Francisco",
-    suffix: "San Francisco City and County, California"
-  });
+const Weather = ({
+  getCurrentLocation,
+  currentLocation,
+  setCurrentLocation,
+  picture,
+  getPicture,
+  forecasts,
+  getForecasts
+}) => {
+  const [savedLocation, setSavedLocation] = useState(false);
+
+  const getInitialData = async () => {
+    const latitude = localStorage.latitude || 37.7291734;
+    const longitude = localStorage.longitude || -123.0466412;
+
+    await getForecasts(latitude, longitude);
+    await getCurrentLocation(latitude, longitude);
+    await getPicture(latitude, longitude);
+  };
 
   useEffect(() => {
-    // getForecasts(37.773972, -122.431297);
+    if (navigator.geolocation && !savedLocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        localStorage.setItem("latitude", position.coords.latitude);
+        localStorage.setItem("longitude", position.coords.longitude);
+        setSavedLocation(true);
+        getInitialData();
+      });
+    }
+  }, [savedLocation]);
+
+  useEffect(() => {
+    getInitialData();
   }, []);
 
   const setLocation = async (latitude, longitude, name, suffix) => {
     await getForecasts(latitude, longitude);
-    setCurrentLocation({ name, suffix });
+    setCurrentLocation(name, suffix);
+    await getPicture(latitude, longitude);
   };
 
   return (
     <Container>
-      <Background />
+      <Background picture={picture.path} />
       <SearchBar setLocation={setLocation} />
-      <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-        {props => (
-          <WeatherWidget
-            style={props}
-            city={currentLocation.name}
-            citySuffix={currentLocation.suffix}
-            forecasts={forecasts.data}
-          />
-        )}
-      </Spring>
+      <WeatherWidget
+        picture={picture.path}
+        city={currentLocation.name}
+        citySuffix={currentLocation.suffix}
+        forecasts={forecasts.data}
+      />
     </Container>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    forecasts: state.forecasts
+    currentLocation: state.currentLocation,
+    forecasts: state.forecasts,
+    picture: state.picture
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    getCurrentLocation: (latitude, longitude) =>
+      dispatch(getCurrentLocation(latitude, longitude)),
+    setCurrentLocation: (name, suffix) =>
+      dispatch(setCurrentLocation(name, suffix)),
     getForecasts: (latitude, longitude) =>
-      dispatch(getForecasts(latitude, longitude))
+      dispatch(getForecasts(latitude, longitude)),
+    getPicture: (latitude, longitude) =>
+      dispatch(getPicture(latitude, longitude))
   };
 };
 
