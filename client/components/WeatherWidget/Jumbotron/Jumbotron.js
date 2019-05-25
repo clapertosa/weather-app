@@ -1,22 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { Transition } from "react-spring/renderprops";
+import { Transition, animated } from "react-spring/renderprops";
 import { sunTime } from "../../../utils/timestamp";
 import moonPhase from "../../../utils/moonPhase";
 
 const Container = styled.div`
+  position: relative;
   grid-area: jumbotron;
   display: grid;
   grid-template-areas: "city city-suffix" "sun moon";
   padding: 20px;
   min-height: 20rem;
-  background: url("https://i.imgur.com/Zrv7OgJ.jpg");
-  background-size: cover;
-  background-position: center;
   color: white;
   font-size: 1.5rem;
   text-shadow: 3px 3px 3px black;
+
+  transition: background-image 0.3s;
 
   @media (min-width: ${({ theme: { mediaQueryMinWidth } }) =>
       mediaQueryMinWidth}) {
@@ -24,7 +24,24 @@ const Container = styled.div`
   }
 `;
 
-const City = styled.div`
+const Picture = styled(animated.div)`
+  position: absolute;
+  background-color: #8787875c;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+`;
+
+const City = styled(animated.div)`
   grid-area: city;
   font-size: 2rem;
   font-weight: bold;
@@ -35,7 +52,7 @@ const City = styled.div`
   }
 `;
 
-const CitySuffix = styled.div`
+const CitySuffix = styled(animated.div)`
   grid-area: city-suffix;
   margin-left: auto;
   display: flex;
@@ -53,7 +70,7 @@ const CitySuffix = styled.div`
   }
 `;
 
-const Sun = styled.div`
+const Sun = styled(animated.div)`
   grid-area: sun;
   margin-top: auto;
 
@@ -62,7 +79,7 @@ const Sun = styled.div`
   }
 `;
 
-const Moon = styled.div`
+const Moon = styled(animated.div)`
   grid-area: moon;
   margin-top: auto;
   margin-left: auto;
@@ -84,6 +101,8 @@ const Moon = styled.div`
 
 const Jumbotron = ({
   isForecastsLoading,
+  isCurrentLocationLoading,
+  picture,
   city,
   citySuffix,
   sunrise,
@@ -93,13 +112,30 @@ const Jumbotron = ({
   return (
     <Container>
       <Transition
-        items={isForecastsLoading}
+        native
+        items={picture}
         from={{ opacity: 0 }}
         enter={{ opacity: 1 }}
         leave={{ opacity: 0 }}
       >
-        {isForecastsLoading =>
-          !isForecastsLoading &&
+        {picture =>
+          picture &&
+          (props => (
+            <Picture style={props} picture={picture}>
+              <img src={picture} />
+            </Picture>
+          ))
+        }
+      </Transition>
+      <Transition
+        native
+        items={isForecastsLoading || isCurrentLocationLoading}
+        from={{ opacity: 0 }}
+        enter={{ opacity: 1 }}
+        leave={{ opacity: 0 }}
+      >
+        {loading =>
+          !loading &&
           (props => (
             <>
               <City style={props}>{city}</City>
@@ -129,7 +165,8 @@ const Jumbotron = ({
 
 const mapStateToProps = state => {
   return {
-    isForecastsLoading: state.forecasts.loading
+    isForecastsLoading: state.forecasts.loading,
+    isCurrentLocationLoading: state.currentLocation.loading
   };
 };
 
