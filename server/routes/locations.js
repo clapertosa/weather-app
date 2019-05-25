@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require("axios").default;
 const keys = require("../config/keys");
 
-router.post("/", async (req, res) => {
+router.post("/name", async (req, res) => {
   const { city } = req.body;
 
   if (!city || (city && city.trim().length <= 0)) {
@@ -12,6 +12,18 @@ router.post("/", async (req, res) => {
 
   const place = await axios.get(
     `https://geocoder.tilehosting.com/q/${city}.js?key=${keys.MAPTILER_API}`
+  );
+
+  return res.status(200).json(place.data.results);
+});
+
+router.post("/coords", async (req, res) => {
+  const { latitude, longitude } = req.body;
+
+  const place = await axios.get(
+    `https://geocoder.tilehosting.com/r/${longitude}/${latitude}.js?key=${
+      keys.MAPTILER_API
+    }`
   );
 
   return res.status(200).json(place.data.results);
