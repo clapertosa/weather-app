@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Transition, animated } from "react-spring/renderprops";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 const Container = styled(animated.div)`
   position: fixed;
@@ -11,12 +13,16 @@ const Container = styled(animated.div)`
   overflow: hidden;
   z-index: -10;
 
-  img {
-    min-width: 100%;
-    min-height: 100%;
-    object-fit: cover;
-    filter: blur(20px);
-    transform: scale(1.1);
+  span {
+    width: 100%;
+    height: 100%;
+    img {
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      filter: blur(20px);
+      transform: scale(1.1);
+    }
   }
 `;
 
@@ -33,7 +39,7 @@ const Background = ({ picture }) => {
         picture &&
         (props => (
           <Container style={props}>
-            <img src={picture} />
+            <LazyLoadImage effect="opacity" src={picture} />
           </Container>
         ))
       }

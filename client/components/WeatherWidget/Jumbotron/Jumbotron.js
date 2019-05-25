@@ -5,6 +5,8 @@ import { Transition, animated } from "react-spring/renderprops";
 import { sunTime } from "../../../utils/timestamp";
 import moonPhase from "../../../utils/moonPhase";
 import Spinner from "../../Spinner/Spinner";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 const Container = styled.div`
   position: relative;
@@ -34,11 +36,15 @@ const Picture = styled(animated.div)`
   height: 100%;
   z-index: -1;
 
-  img {
+  span {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
   }
 `;
 
@@ -125,7 +131,7 @@ const Jumbotron = ({
           picture &&
           (props => (
             <Picture style={props} picture={picture}>
-              <img src={picture} />
+              <LazyLoadImage effect="opacity" src={picture} />
             </Picture>
           ))
         }
