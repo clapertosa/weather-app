@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   loading: false,
-  path: "/images/background_fallback.jpg",
+  path: null,
   success: null,
   error: null
 };
@@ -15,7 +15,7 @@ const reducer = (state = initialState, action) => {
         loading: true,
         error: null,
         success: null,
-        path: "/images/background_fallback.jpg"
+        path: null
       };
     case actionTypes.GET_PICTURE_SUCCESS:
       return {
