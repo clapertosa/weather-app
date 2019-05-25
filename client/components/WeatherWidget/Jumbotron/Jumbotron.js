@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Transition, animated } from "react-spring/renderprops";
 import { sunTime } from "../../../utils/timestamp";
 import moonPhase from "../../../utils/moonPhase";
+import Spinner from "../../Spinner/Spinner";
 
 const Container = styled.div`
   position: relative;
@@ -102,6 +103,7 @@ const Moon = styled(animated.div)`
 const Jumbotron = ({
   isForecastsLoading,
   isCurrentLocationLoading,
+  isPictureLoading,
   picture,
   city,
   citySuffix,
@@ -111,6 +113,7 @@ const Jumbotron = ({
 }) => {
   return (
     <Container>
+      {isPictureLoading ? <Spinner /> : null}
       <Transition
         native
         items={picture}
@@ -166,7 +169,8 @@ const Jumbotron = ({
 const mapStateToProps = state => {
   return {
     isForecastsLoading: state.forecasts.loading,
-    isCurrentLocationLoading: state.currentLocation.loading
+    isCurrentLocationLoading: state.currentLocation.loading,
+    isPictureLoading: state.picture.loading
   };
 };
 
