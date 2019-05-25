@@ -5,7 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/opacity.css";
 
 const Container = styled(animated.div)`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: 100%;
