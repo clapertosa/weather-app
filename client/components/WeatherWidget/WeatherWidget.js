@@ -6,6 +6,7 @@ import Forecasts from "./Forecasts/Forecasts";
 
 const Wrapper = styled(animated.div)`
   grid-area: weather;
+  max-height: 650px;
   min-height: 650px;
   max-width: 70rem;
   width: 95%;
