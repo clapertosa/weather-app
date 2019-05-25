@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import backgroundPic from "./background.jpg";
+import { Transition, animated } from "react-spring/renderprops";
 
-const Container = styled.div`
+const Container = styled(animated.div)`
   position: fixed;
   top: 0;
   left: 0;
@@ -20,11 +20,24 @@ const Container = styled.div`
   }
 `;
 
-const Background = () => {
+const Background = ({ picture }) => {
   return (
-    <Container>
-      <img src={backgroundPic} alt="" />
-    </Container>
+    <Transition
+      native
+      items={picture}
+      from={{ opacity: 0 }}
+      enter={{ opacity: 1 }}
+      leave={{ opacity: 0 }}
+    >
+      {picture =>
+        picture &&
+        (props => (
+          <Container style={props}>
+            <img src={picture} />
+          </Container>
+        ))
+      }
+    </Transition>
   );
 };
 
