@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import { Spring, animated } from "react-spring/renderprops";
 import Jumbotron from "./Jumbotron/Jumbotron";
 import Forecasts from "./Forecasts/Forecasts";
 
-const Wrapper = styled.div`
+const Wrapper = styled(animated.div)`
   grid-area: weather;
   min-height: 650px;
   max-width: 70rem;
   width: 95%;
   margin: 20px auto;
+  box-shadow: 3px 3px 3px black;
 
   @media (min-width: ${({ theme: { mediaQueryMinWidth } }) =>
       mediaQueryMinWidth}) {
@@ -25,20 +27,25 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const WeatherWidget = ({ style, city, citySuffix, forecasts }) => {
+const WeatherWidget = ({ picture, city, citySuffix, forecasts }) => {
   return (
-    <Wrapper style={style}>
-      <Container>
-        <Jumbotron
-          city={city}
-          citySuffix={citySuffix}
-          sunrise={forecasts.daily && forecasts.daily.data[0].sunriseTime}
-          sunset={forecasts.daily && forecasts.daily.data[0].sunsetTime}
-          lunarCycle={forecasts.daily && forecasts.daily.data[0].moonPhase}
-        />
-        <Forecasts forecasts={forecasts} />
-      </Container>
-    </Wrapper>
+    <Spring native from={{ opacity: 0 }} to={{ opacity: 1 }}>
+      {props => (
+        <Wrapper style={props}>
+          <Container>
+            <Jumbotron
+              picture={picture}
+              city={city}
+              citySuffix={citySuffix}
+              sunrise={forecasts.daily && forecasts.daily.data[0].sunriseTime}
+              sunset={forecasts.daily && forecasts.daily.data[0].sunsetTime}
+              lunarCycle={forecasts.daily && forecasts.daily.data[0].moonPhase}
+            />
+            <Forecasts forecasts={forecasts} />
+          </Container>
+        </Wrapper>
+      )}
+    </Spring>
   );
 };
 

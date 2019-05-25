@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Transition } from "react-spring/renderprops";
+import { Transition, animated } from "react-spring/renderprops";
 
-const Container = styled.div`
+const Container = styled(animated.div)`
   grid-area: results;
   position: absolute;
   top: 5rem;
@@ -11,6 +11,7 @@ const Container = styled.div`
   max-width: 800px;
   width: 95%;
   overflow: hidden;
+  z-index: 1;
 
   @media (min-width: ${({ theme: { mediaQueryMinWidth } }) =>
       mediaQueryMinWidth}) {
@@ -42,6 +43,7 @@ const ListItem = styled.li`
 const Results = ({ setLocation, show, results }) => {
   return (
     <Transition
+      native
       items={show}
       from={{ opacity: 0 }}
       enter={{ opacity: 1 }}

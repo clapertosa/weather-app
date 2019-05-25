@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { Transition } from "react-spring/renderprops";
+import { Transition, animated } from "react-spring/renderprops";
 
-const Container = styled.div`
+const Container = styled(animated.div)`
   grid-area: weekday;
   display: grid;
   grid-template-areas: "weekday0 weekday1" "weekday2 weekday3" "weekday4 weekday5";
@@ -60,9 +60,8 @@ const WeekdayContainer = ({ isForecastsLoading, children }) => {
       enter={{ opacity: 1 }}
       leave={{ opacity: 0 }}
     >
-      {isForecastsLoading =>
-        !isForecastsLoading &&
-        (props => <Container style={props}>{children}</Container>)
+      {loading =>
+        !loading && (props => <Container style={props}>{children}</Container>)
       }
     </Transition>
   );
