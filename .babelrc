@@ -1,19 +1,7 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "browsers": ["> 1%", "last 2 versions"]
-        }
-      }
-    ],
-    "stage-2",
-    "react"
-  ],
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
   "plugins": [
-    "syntax-dynamic-import",
-    "transform-runtime",
-    "transform-async-to-generator"
+    "babel-plugin-styled-components",
+    "@babel/plugin-transform-runtime"
   ]
 }

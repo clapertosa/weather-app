@@ -1,90 +1,68 @@
 const path = require("path");
-const autoprefixer = require("autoprefixer");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: "development",
-  devtool: "cheap-module-eval-source-map",
-  entry: "./src/index.js",
+  entry: "./client/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
-    chunkFilename: "[id].js",
-    publicPath: ""
-  },
-  resolve: {
-    extensions: [".js", ".jsx"]
+    publicPath: "/"
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        loader: "babel-loader",
-        exclude: /node_modules/
-      },
-      {
-        test: /\.(css|scss|sass)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-              localIdentName: "[name]__[local]--[hash:base64:5]",
-              importLoaders: 1
-            }
-          },
-
-          {
-            loader: "postcss-loader",
-            options: {
-              ident: "postcss",
-              plugins: () => [
-                autoprefixer({
-                  browsers: ["> 1%", "last 2 versions"]
-                })
-              ]
-            }
-          },
-          {
-            loader: "sass-loader"
-          }
-        ]
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/,
-        loader: "url-loader?limit=8000&name=images/[name].[ext]"
-      },
-      {
-        test: /\.(ttf|eot|woff|woff2|otf)$/,
+        test: /\.(js|jsx)$/,
+        exclude: /(node_modules|bower_components)/,
         use: {
-          loader: "file-loader",
+          loader: "babel-loader",
           options: {
-            name: "fonts/[name].[ext]"
+            presets: ["@babel/preset-env"]
           }
         }
       },
       {
-        test: /\.svg$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "vectors/[name].[ext]"
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: [
+                require("autoprefixer")({
+                  browsers: ["> 1%", "last 2 versions"]
+                })
+              ]
+            }
           }
+        ]
+      },
+      {
+        test: /\.(jpg|jpeg|png|gif|svg)$/,
+        loader: "url-loader",
+        options: {
+          name: "assets/images/[name].[ext]",
+          limit: 9000
+        }
+      },
+      {
+        test: /\.(ttf|eot|woff|woff2)$/,
+        loader: "url-loader",
+        options: {
+          name: "assets/fonts/[name].[ext]",
+          limit: 8192
         }
       }
     ]
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "client/index.html")
+    }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
-    }),
-    new HtmlWebpackPlugin({
-      template: __dirname + "/src/index.html",
-      filename: "index.html",
-      inject: "body"
     })
   ]
 };
