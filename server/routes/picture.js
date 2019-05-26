@@ -18,6 +18,7 @@ router.post("/", async (req, res) => {
         group_id: "1463451@N25",
         media: "photos",
         geo_context: 2,
+        radius: 3,
         extras: "url_o,url_l",
         lat,
         lon
