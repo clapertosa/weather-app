@@ -13,3 +13,4 @@
 <p><b>Locations API: <a href="https://www.maptiler.com/">MapTiler</a></b></p>
 <p><b>Host: <a href="https://www.heroku.com/">Heroku</a></b></p>
 <p><b>SVG: <a href="https://www.flaticon.com/">Flaticon</a></p></b>
+<p><b>Moon Phases Icons: <a href="https://www.vecteezy.com/vector-art/114749-moon-phase-with-earth-vector">Vecteezy</a></p></b>

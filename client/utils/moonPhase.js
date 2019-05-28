@@ -1,11 +1,11 @@
-import newMoon from "../assets/images/moon_phases/moon.svg";
-import waxingCrescent from "../assets/images/moon_phases/crescent.svg";
-import firstQuarter from "../assets/images/moon_phases/half-moon.svg";
-import waxingGibbous from "../assets/images/moon_phases/gibbous-moon.svg";
-import fullMoon from "../assets/images/moon_phases/full-moon.svg";
-import waningGibbous from "../assets/images/moon_phases/gibbous-moon1.svg";
-import lastQuarter from "../assets/images/moon_phases/half-moon1.svg";
-import waningCrescent from "../assets/images/moon_phases/crescent1.svg";
+import newMoon from "../assets/images/moon_phases/new-moon.png";
+import waxingCrescent from "../assets/images/moon_phases/waxing-crescent.png";
+import firstQuarter from "../assets/images/moon_phases/first-quarter.png";
+import waxingGibbous from "../assets/images/moon_phases/waxing-gibbous.png";
+import fullMoon from "../assets/images/moon_phases/full-moon.png";
+import waningGibbous from "../assets/images/moon_phases/waning-gibbous.png";
+import lastQuarter from "../assets/images/moon_phases/last-quarter.png";
+import waningCrescent from "../assets/images/moon_phases/waning-crescent.png";
 
 export default phase => {
   // New Moon
