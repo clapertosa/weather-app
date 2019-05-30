@@ -20,11 +20,7 @@ router.post("/name", async (req, res) => {
 router.post("/coords", async (req, res) => {
   const { latitude, longitude } = req.body;
 
-  if (
-    !latitude ||
-    typeof latitude !== "number" ||
-    (!longitude || typeof longitude !== "number")
-  ) {
+  if (!latitude || !longitude) {
     return res.status(400).json("Latitude and Longitude are required");
   }
 
