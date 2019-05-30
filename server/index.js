@@ -35,4 +35,8 @@ app.use("/api/locations", locationsRoute);
 app.use("/api/forecasts", forecastsRoute);
 app.use("/api/picture", pictureRoute);
 
-app.listen(PORT, () => console.log("Server started"));
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT);
+}
+
+module.exports = app;
