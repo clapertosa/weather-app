@@ -13,6 +13,7 @@ const Container = styled.div`
   grid-area: jumbotron;
   display: grid;
   grid-template-areas: "city city-suffix" "sun moon";
+  grid-row-gap: 10px;
   padding: 20px;
   min-height: 20rem;
   color: white;
@@ -63,7 +64,7 @@ const CitySuffix = styled(animated.div)`
   grid-area: city-suffix;
   margin-left: auto;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   flex-flow: column;
 
   i {
@@ -74,6 +75,11 @@ const CitySuffix = styled(animated.div)`
     font-size: 1.2rem;
     margin: 5px 0;
     text-align: right;
+  }
+
+  @media (min-width: ${({ theme: { mediaQueryMinWidth } }) =>
+      mediaQueryMinWidth}) {
+    align-items: center;
   }
 `;
 
@@ -92,7 +98,7 @@ const Moon = styled(animated.div)`
   margin-left: auto;
   display: flex;
   flex-flow: column;
-  align-items: center;
+  align-items: flex-end;
   text-align: right;
 
   img {
@@ -103,6 +109,11 @@ const Moon = styled(animated.div)`
         mediaQueryMinWidth}) {
       width: 50px;
     }
+  }
+
+  @media (min-width: ${({ theme: { mediaQueryMinWidth } }) =>
+      mediaQueryMinWidth}) {
+    align-items: center;
   }
 `;
 
