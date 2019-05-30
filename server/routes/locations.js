@@ -20,6 +20,14 @@ router.post("/name", async (req, res) => {
 router.post("/coords", async (req, res) => {
   const { latitude, longitude } = req.body;
 
+  if (
+    !latitude ||
+    typeof latitude !== "number" ||
+    (!longitude || typeof longitude !== "number")
+  ) {
+    return res.status(400).json("Latitude and Longitude are required");
+  }
+
   const place = await axios.get(
     `https://geocoder.tilehosting.com/r/${longitude}/${latitude}.js?key=${
       keys.MAPTILER_API
